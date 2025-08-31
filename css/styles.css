@@ -1,7 +1,22 @@
+a {
+	text-decoration: none;
+}
+ul,
+li {
+	list-style: none;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
 .gallery {
 	display: flex;
 	flex-wrap: wrap;
-	row-gap: 24px;
+	column-gap: 24px;
+	row-gap: 48px;
 }
 
 .gallery-item {

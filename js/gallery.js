@@ -1,19 +1,3 @@
-const galleryContainer = document.querySelector('ul.gallery');
-
-galleryContainer.addEventListener('click', event => {
-    event.preventDefault();
-
-    if (event.target.nodeName === 'IMG') {
-        const largeImageURL = event.target.dataset.source;
-
-        const instance = basicLightbox.create(`
-            <img src="${largeImageURL}" width="800" height="600">
-        `);
-        instance.show();
-    }
-});
-
-
 const images = [
   {
     preview: 'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
@@ -62,12 +46,11 @@ const images = [
   },
 ];
 
+const galleryContainer = document.querySelector('.gallery');
 
-const galleryList = document.querySelector('.gallery');
-
-
-function createGalleryItem({ preview, original, description }) {
-  return `
+const galleryMarkup = images
+  .map(
+    ({ preview, original, description }) => `
     <li class="gallery-item">
       <a class="gallery-link" href="${original}">
         <img
@@ -78,11 +61,20 @@ function createGalleryItem({ preview, original, description }) {
         />
       </a>
     </li>
-  `;
+  `
+  )
+  .join('');
+
+galleryContainer.innerHTML = galleryMarkup;
+
+galleryContainer.addEventListener('click', onGalleryClick);
+
+function onGalleryClick(event) {
+  event.preventDefault();
+  if (event.target.nodeName !== 'IMG') return;
+  const largeImageURL = event.target.dataset.source;
+  const instance = basicLightbox.create(`
+    <img src="${largeImageURL}" width="1112" height="640">
+  `);
+  instance.show();
 }
-
-
-const galleryItemsMarkup = images.map(createGalleryItem).join('');
-
-
-galleryList.innerHTML = galleryItemsMarkup;
